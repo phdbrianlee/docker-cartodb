@@ -1,8 +1,8 @@
 FROM ubuntu:14.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
-sudo locale-gen en_US.UTF-8
-sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+RUN sudo locale-gen en_US.UTF-8
+RUN sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 ENV WINDSHAFT_VERSION 2.87.5
 ENV ENVIRONMENT production
