@@ -11,6 +11,7 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends pytho
 RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
 RUN sudo add-apt-repository -y ppa:cartodb/cairo
 
+# step 8: W: Failed to fetch http://ppa.launchpad.net/cartodb/cairo/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found
 RUN sudo apt-get update \
       && sudo apt-get install -y --no-install-recommends \
            build-essential checkinstall \
