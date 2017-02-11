@@ -2,9 +2,9 @@ FROM ubuntu:14.04 # 12.04
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 # Version of CartoDB Editor
-ENV CDB_VERSION 4.0.4 #3.11.0
+ENV CDB_VERSION 4.0.4 # 3.11.0
 # Version of CartoDB SQL API
-ENV SQL_VERSION 1.43.1 #1.24.0
+ENV SQL_VERSION 1.43.1 # 1.24.0
 # Version of CartoDB.js
 ENV CDBJS_VERSION 3.15.3
 
