@@ -12,13 +12,13 @@ ENV PG_MAJOR 9.5
 ENV ENVIRONMENT production
 
 # Set UTF8 locale
-RUN sudo apt-get update && sudo apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
       && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
 # Get the add-apt-repository command
-RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends python-software-properties \ 
-    && sudo apt-get install -y software-properties-common 
+RUN apt-get update && apt-get install -y --no-install-recommends python-software-properties \ 
+    && apt-get install -y software-properties-common 
     
 RUN add-apt-repository -y ppa:cartodb/nodejs-010
 RUN add-apt-repository -y ppa:cartodb/postgresql-$PG_MAJOR
@@ -26,8 +26,8 @@ RUN add-apt-repository -y ppa:cartodb/gis
 
 # 
 # Failed to fetch http://ppa.launchpad.net/cartodb/postgresql-9.5/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found 
-RUN sudo apt-get update \
-      && sudo apt-get install -y --no-install-recommends \
+RUN apt-get update \
+      && apt-get install -y --no-install-recommends \
            autoconf binutils-doc bison build-essential flex \
            curl \
            gdal-bin libgdal-dev libgdal1h libgdal1-dev \
@@ -48,8 +48,8 @@ RUN sudo apt-get update \
            postgresql-server-dev-$PG_MAJOR \
            proj proj-bin proj-data libproj-dev \
            python-dev python-pip \
-      && sudo apt-get clean \
-      && sudo rm -rf /var/lib/apt/lists/*
+      && apt-get clean \
+      && rm -rf /var/lib/apt/lists/*
 
 # Setup Ruby
 RUN curl -sSL https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz | tar -v -C / -xz \
@@ -59,8 +59,8 @@ RUN curl -sSL https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz |
 
 ENV PATH /opt/rubies/ruby-2.2.3/bin:$PATH
 
-RUN sudo gem install bundler \ 
-    && sudo gem install compass
+RUN gem install bundler \ 
+    && gem install compass
 
 # Download cartodb and submodules
 RUN curl -sSL https://github.com/CartoDB/cartodb/archive/v$CDB_VERSION.tar.gz | tar -v -C / -xz \
