@@ -1,4 +1,4 @@
-FROM ubuntu:14.04 #12.04
+FROM ubuntu:14.04 #12.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 ENV SQL_VERSION 1.43.1 #1.24.0
