@@ -14,6 +14,7 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends pytho
 RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
 RUN sudo add-apt-repository -y ppa:cartodb/cairo
 
+# Step 10 : 未成功
 RUN sudo apt-get update \
       && sudo apt-get install -y --no-install-recommends \
            build-essential checkinstall \
