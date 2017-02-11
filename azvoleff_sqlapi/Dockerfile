@@ -8,6 +8,9 @@ ENV SQL_VERSION 1.43.1
 ENV ENVIRONMENT production
 
 # Get the add-apt-repository command
+# 12.04 - /bin/sh: 1: sudo: not found
+# 
+RUN apt-get install sudo
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends python-software-properties \ 
     && sudo apt-get install -y software-properties-common 
     
