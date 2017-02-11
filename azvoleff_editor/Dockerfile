@@ -1,30 +1,31 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04  # 12.04
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 # Version of CartoDB Editor
-ENV CDB_VERSION 3.11.0
+ENV CDB_VERSION 3.13.0 # 3.11.0
 # Version of CartoDB SQL API
-ENV SQL_VERSION 1.24.0
+ENV SQL_VERSION 1.43.1 #1.24.0
 # Version of CartoDB.js
 ENV CDBJS_VERSION 3.15.3
 
-ENV PG_MAJOR 9.3
+ENV PG_MAJOR 9.5 #9.3
 ENV ENVIRONMENT production
 
 # Set UTF8 locale
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+RUN sudo apt-get update && sudo apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
       && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
 # Get the add-apt-repository command
-RUN apt-get update && apt-get install -y --no-install-recommends python-software-properties
-
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends python-software-properties \ 
+    && sudo apt-get install -y software-properties-common 
+    
 RUN add-apt-repository -y ppa:cartodb/nodejs-010
 RUN add-apt-repository -y ppa:cartodb/postgresql-$PG_MAJOR
 RUN add-apt-repository -y ppa:cartodb/gis
 
-RUN apt-get update \
-      && apt-get install -y --no-install-recommends \
+RUN sudo apt-get update \
+      && sudo apt-get install -y --no-install-recommends \
            autoconf binutils-doc bison build-essential flex \
            curl \
            gdal-bin libgdal-dev libgdal1h libgdal1-dev \
@@ -45,45 +46,46 @@ RUN apt-get update \
            postgresql-server-dev-$PG_MAJOR \
            proj proj-bin proj-data libproj-dev \
            python-dev python-pip \
-      && apt-get clean \
-      && rm -rf /var/lib/apt/lists/*
+      && sudo apt-get clean \
+      && sudo rm -rf /var/lib/apt/lists/*
 
 # Setup Ruby
-RUN curl -sSL https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz | tar -v -C /usr/src -xz \
-      && cd /usr/src/ruby-install-0.5.0 \
+RUN curl -sSL https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz | tar -v -C / -xz \
+      && cd /ruby-install-0.5.0 \
       && make install \
-      && ruby-install ruby 1.9.3 -- --disable-install-rdoc
+      && ruby-install ruby 2.2.3 -- --disable-install-rdoc
 
-ENV PATH /opt/rubies/ruby-1.9.3-p547/bin:$PATH
+ENV PATH /opt/rubies/ruby-2.2.3/bin:$PATH
 
-RUN gem install bundler
+RUN sudo gem install bundler \ 
+    && sudo gem install compass
 
 # Download cartodb and submodules
-RUN curl -sSL https://github.com/CartoDB/cartodb/archive/v$CDB_VERSION.tar.gz | tar -v -C /usr/src -xz \
-      && curl -sSL https://github.com/CartoDB/cartodb.js/archive/$CDBJS_VERSION.tar.gz | tar -v -C /usr/src/cartodb-$CDB_VERSION/lib/assets/javascripts/cdb -xz --strip-components=1 \
-      && curl -sSL https://github.com/CartoDB/CartoDB-SQL-API/archive/$SQL_VERSION.tar.gz | tar -v -C /usr/src/cartodb-$CDB_VERSION/lib/sql -xz --strip-components=1 \
-      && curl -sSL https://github.com/CartoDB/cartodb.css/archive/d6e8f1579043b951f76c0c032a4afa4508edbb05.tar.gz | tar -v -C /usr/src/cartodb-$CDB_VERSION/app/assets/stylesheets/old_common -xz --strip-components=1
+RUN curl -sSL https://github.com/CartoDB/cartodb/archive/v$CDB_VERSION.tar.gz | tar -v -C / -xz \
+      && curl -sSL https://github.com/CartoDB/cartodb.js/archive/$CDBJS_VERSION.tar.gz | tar -v -C /cartodb-$CDB_VERSION/lib/assets/javascripts/cdb -xz --strip-components=1 \
+      && curl -sSL https://github.com/CartoDB/CartoDB-SQL-API/archive/$SQL_VERSION.tar.gz | tar -v -C /cartodb-$CDB_VERSION/lib/sql -xz --strip-components=1 \
+      && curl -sSL https://github.com/CartoDB/cartodb.css/archive/d6e8f1579043b951f76c0c032a4afa4508edbb05.tar.gz | tar -v -C /cartodb-$CDB_VERSION/app/assets/stylesheets/old_common -xz --strip-components=1
 
-RUN cd /usr/src/cartodb-$CDB_VERSION && RAILS_ENV=$ENVIRONMENT bundle install
+RUN cd /cartodb-$CDB_VERSION && RAILS_ENV=$ENVIRONMENT bundle install
 
-RUN cd /usr/src/cartodb-$CDB_VERSION && npm install
+RUN cd /cartodb-$CDB_VERSION && npm install
 
 ENV CPATH /usr/include/gdal/
-RUN cd /usr/src/cartodb-$CDB_VERSION && pip install -r python_requirements.txt
+RUN cd /cartodb-$CDB_VERSION && pip install -r python_requirements.txt
 
-RUN cd /usr/src/cartodb-$CDB_VERSION/config \
+RUN cd /cartodb-$CDB_VERSION/config \
       && cp grunt_production.json.sample grunt_production.json
 
 # Add grunt to path to avoid "grunt command not found" error
-ENV PATH $PATH:/usr/src/cartodb-$CDB_VERSION/node_modules/grunt-cli/bin
+ENV PATH $PATH:/cartodb-$CDB_VERSION/node_modules/grunt-cli/bin
 
 # Ensure compass gem is found
 #RUN gem source -a http://rubygems.org
 
-RUN cd /usr/src/cartodb-$CDB_VERSION \
+RUN cd /cartodb-$CDB_VERSION \
       && RAILS_ENV=$ENVIRONMENT bundle exec grunt --environment $ENVIRONMENT
 
-RUN cd /usr/src/cartodb-$CDB_VERSION/config \
+RUN cd /cartodb-$CDB_VERSION/config \
       && cp app_config.yml.sample app_config.yml \
       && cp database.yml.sample database.yml
 
