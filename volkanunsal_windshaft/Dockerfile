@@ -68,9 +68,6 @@ RUN apt-get update &&\
     zlib1g-dev \
   --no-install-recommends
 
-RUN git config --global user.email spocksplanet@gmail.com \
-  && git config --global user.name "Volkan Unsal"
-
 # Install NodeJS
 RUN curl https://nodejs.org/download/release/v0.10.41/node-v0.10.41-linux-x64.tar.gz| tar -zxf - --strip-components=1 -C /usr
 
