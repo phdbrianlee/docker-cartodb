@@ -5,13 +5,14 @@ ENV WINDSHAFT_VERSION 2.87.5
 ENV ENVIRONMENT production
 
 # Get the add-apt-repository command
-RUN apt-get update && apt-get install -y --no-install-recommends python-software-properties
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends python-software-properties \ 
+    && sudo apt-get install -y software-properties-common 
+    
+RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
+RUN sudo add-apt-repository -y ppa:cartodb/cairo
 
-RUN add-apt-repository -y ppa:cartodb/nodejs-010
-RUN add-apt-repository -y ppa:cartodb/cairo
-
-RUN apt-get update \
-      && apt-get install -y --no-install-recommends \
+RUN sudo apt-get update \
+      && sudo apt-get install -y --no-install-recommends \
            build-essential checkinstall \
            pkg-config libcairo2-dev libjpeg8-dev libgif-dev \
            nodejs \
@@ -19,12 +20,12 @@ RUN apt-get update \
            curl \
            netcat \
            git \
-      && apt-get clean \
+      && sudo apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://github.com/CartoDB/Windshaft-cartodb/archive/$WINDSHAFT_VERSION.tar.gz | tar -v -C / -xz
 
-RUN cd /Windshaft-cartodb-$WINDSHAFT_VERSION && npm install
+RUN cd /Windshaft-cartodb-$WINDSHAFT_VERSION && sudo npm install
 
 RUN mkdir /Windshaft-cartodb-$WINDSHAFT_VERSION/logs
 
