@@ -1,4 +1,4 @@
-FROM ubuntu:14.04  
+FROM ubuntu:12.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 RUN sudo locale-gen en_US.UTF-8
@@ -12,9 +12,9 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends pytho
     && sudo apt-get install -y software-properties-common 
     
 RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
-# RUN sudo add-apt-repository -y ppa:cartodb/cairo \
+RUN sudo add-apt-repository -y ppa:cartodb/cairo 
 # Step 9 : RUN sudo apt-get install libpango1.0-dev 未成功
-RUN sudo apt-get install libpango1.0-dev 
+# RUN sudo apt-get install libpango1.0-dev 
 
 # http://cartodb.readthedocs.io/en/latest/install.html#maps-api 
 
