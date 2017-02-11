@@ -2,8 +2,8 @@
 
 export RAILS_ENV=$ENVIRONMENT
 
-CONFIG_FILE=/usr/src/cartodb-$CDB_VERSION/config/app_config.yml
-DB_CONFIG_FILE=/usr/src/cartodb-$CDB_VERSION/config/database.yml
+CONFIG_FILE=/cartodb-$CDB_VERSION/config/app_config.yml
+DB_CONFIG_FILE=/cartodb-$CDB_VERSION/config/database.yml
 
 : ${REDIS_HOST:=localhost}
 : ${REDIS_PORT:=6379}
@@ -33,7 +33,7 @@ if [ ! -z "$DB_HOST" ]; then
     sed -ri 's/^(\s*)host:.*$/\1host: '"$DB_HOST"'/' $DB_CONFIG_FILE
 fi
 
-cd /usr/src/cartodb-$CDB_VERSION
+cd /cartodb-$CDB_VERSION
 if [ ! -z "$CREATE_DB" ]; then
     bundle exec rake cartodb:db:setup SUBDOMAIN=${CDB_USER:-test} \
 	EMAIL=${CDB_EMAIL:-example@example.com} PASSWORD=${CDB_PASS:-password}
