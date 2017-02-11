@@ -1,7 +1,7 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04 #12.04
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
-ENV SQL_VERSION 1.24.0
+ENV SQL_VERSION 1.43.1 #1.24.0
 ENV ENVIRONMENT production
 
 # Get the add-apt-repository command
@@ -22,11 +22,12 @@ RUN apt-get update \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://github.com/CartoDB/CartoDB-SQL-API/archive/$SQL_VERSION.tar.gz | tar -v -C /usr/src -xz
+RUN curl -sSL https://github.com/CartoDB/CartoDB-SQL-API/archive/$SQL_VERSION.tar.gz | tar -v -C / -xz
 
-RUN cd /usr/src/CartoDB-SQL-API-$SQL_VERSION && npm install
+RUN cd /CartoDB-SQL-API-$SQL_VERSION && npm install \ 
+    && mkdir /CartoDB-SQL-API-$SQL_VERSION/logs
 
-RUN cd /usr/src/CartoDB-SQL-API-$SQL_VERSION/config/environments \
+RUN cd /CartoDB-SQL-API-$SQL_VERSION/config/environments \
       && cp $ENVIRONMENT.js.example $ENVIRONMENT.js
 
 COPY ./startup.sh /opt/startup.sh
