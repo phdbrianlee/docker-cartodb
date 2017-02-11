@@ -1,10 +1,10 @@
-FROM ubuntu:14.04  
+FROM ubuntu:12.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 RUN sudo locale-gen en_US.UTF-8
 RUN sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
-ENV SQL_VERSION 1.43.1 #1.24.0
+ENV SQL_VERSION 1.43.1 
 ENV ENVIRONMENT production
 
 # Get the add-apt-repository command
@@ -15,6 +15,7 @@ RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
 RUN sudo add-apt-repository -y ppa:cartodb/cairo
 
 # Step 10 : 未成功
+# W: Failed to fetch http://ppa.launchpad.net/cartodb/nodejs-010/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found
 RUN sudo apt-get update \
       && sudo apt-get install -y --no-install-recommends \
            build-essential checkinstall \
