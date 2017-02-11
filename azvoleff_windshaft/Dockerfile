@@ -13,7 +13,9 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends pytho
     
 RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
 RUN sudo add-apt-repository -y ppa:cartodb/cairo \
-    && sudo apt-get install libpango1.0-dev # http://cartodb.readthedocs.io/en/latest/install.html#maps-api 
+    && sudo apt-get install libpango1.0-dev 
+
+# http://cartodb.readthedocs.io/en/latest/install.html#maps-api 
 
 # step 8: W: Failed to fetch http://ppa.launchpad.net/cartodb/cairo/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found
 # check here: http://ppa.launchpad.net/cairo-dock-team/ppa/ubuntu/dists/trusty/main/binary-amd64/Packages
