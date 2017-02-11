@@ -1,6 +1,9 @@
 FROM ubuntu:14.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
+RUN sudo locale-gen en_US.UTF-8
+RUN sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
 ENV SQL_VERSION 1.43.1 #1.24.0
 ENV ENVIRONMENT production
 
