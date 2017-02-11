@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIG_FILE=/usr/src/Windshaft-cartodb-$WINDSHAFT_VERSION/config/environments/$ENVIRONMENT.js
+CONFIG_FILE=/Windshaft-cartodb-$WINDSHAFT_VERSION/config/environments/$ENVIRONMENT.js
 
 : ${REDIS_HOST:=localhost}
 : ${REDIS_PORT:=6379}
@@ -31,4 +31,4 @@ if [ ! -z "$DB_HOST" ]; then
     perl -0pi -e 's/(,postgres:\s*\{.{0,100}host:\s*[\x27\x60])[.\d\w]*/${1}'"$DB_HOST"'/igs' $CONFIG_FILE
 fi
 
-node /usr/src/Windshaft-cartodb-$WINDSHAFT_VERSION/app.js $ENVIRONMENT
+node /Windshaft-cartodb-$WINDSHAFT_VERSION/app.js $ENVIRONMENT
