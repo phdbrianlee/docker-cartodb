@@ -4,6 +4,8 @@
 FROM phusion/baseimage:0.9.18
 MAINTAINER Volkan Unsal <spocksplanet@gmail.com>
 
+ENV WINDSHAFT_VERSION 2.87.5
+
 # Configuring locales
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -73,13 +75,12 @@ RUN git config --global user.email spocksplanet@gmail.com \
 RUN curl https://nodejs.org/download/release/v0.10.41/node-v0.10.41-linux-x64.tar.gz| tar -zxf - --strip-components=1 -C /usr
 
 # Install NPM
-RUN npm install -g npm@1.4.29
+# RUN npm install -g npm@1.4.29
 
 # Install Windshaft
-RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git
-WORKDIR /Windshaft-cartodb
-RUN git reset --hard 03991319683452956ad5ceb2a1c95a452dbf3428 &&\
-  ./configure && npm install && mkdir logs
+# RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git
+RUN curl -sSL https://github.com/CartoDB/Windshaft-cartodb/archive/$WINDSHAFT_VERSION.tar.gz | tar -v -C / -xz
+RUN cd /Windshaft-cartodb-$WINDSHAFT_VERSION && npm install && mkdir /Windshaft-cartodb-$WINDSHAFT_VERSION/logs
 
 # Assume the following linked services
 # - postgres:5432
@@ -88,7 +89,7 @@ RUN git reset --hard 03991319683452956ad5ceb2a1c95a452dbf3428 &&\
 # - varnish:6081    // <- port to HTTP interface
 # - statsd:8125
 ADD ./config/WS-dev.js \
-      /Windshaft-cartodb/config/environments/development.js
+      /Windshaft-cartodb-$WINDSHAFT_VERSION/config/environments/development.js
 
 EXPOSE 8181
 
