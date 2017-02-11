@@ -4,11 +4,11 @@ MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 # Version of CartoDB Editor
 ENV CDB_VERSION 3.13.0 # 3.11.0
 # Version of CartoDB SQL API
-ENV SQL_VERSION 1.43.1 #1.24.0
+ENV SQL_VERSION 1.43.1 # 1.24.0
 # Version of CartoDB.js
 ENV CDBJS_VERSION 3.15.3
 
-ENV PG_MAJOR 9.5 #9.3
+ENV PG_MAJOR 9.5 # 9.3
 ENV ENVIRONMENT production
 
 # Set UTF8 locale
