@@ -1,5 +1,8 @@
-FROM ubuntu:14.04
+FROM ubuntu:14.04 #12.04 
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
+
+sudo locale-gen en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 ENV WINDSHAFT_VERSION 2.87.5
 ENV ENVIRONMENT production
@@ -9,9 +12,11 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends pytho
     && sudo apt-get install -y software-properties-common 
     
 RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
-RUN sudo add-apt-repository -y ppa:cartodb/cairo
+RUN sudo add-apt-repository -y ppa:cartodb/cairo \
+    && sudo apt-get install libpango1.0-dev # http://cartodb.readthedocs.io/en/latest/install.html#maps-api 
 
 # step 8: W: Failed to fetch http://ppa.launchpad.net/cartodb/cairo/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found
+# check here: http://ppa.launchpad.net/cairo-dock-team/ppa/ubuntu/dists/trusty/main/binary-amd64/Packages
 RUN sudo apt-get update \
       && sudo apt-get install -y --no-install-recommends \
            build-essential checkinstall \
