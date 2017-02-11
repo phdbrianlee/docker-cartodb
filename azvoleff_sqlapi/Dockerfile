@@ -5,13 +5,14 @@ ENV SQL_VERSION 1.43.1 #1.24.0
 ENV ENVIRONMENT production
 
 # Get the add-apt-repository command
-RUN apt-get update && apt-get install -y --no-install-recommends python-software-properties
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends python-software-properties \ 
+    && sudo apt-get install -y software-properties-common 
+    
+RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
+RUN sudo add-apt-repository -y ppa:cartodb/cairo
 
-RUN add-apt-repository -y ppa:cartodb/nodejs-010
-RUN add-apt-repository -y ppa:cartodb/cairo
-
-RUN apt-get update \
-      && apt-get install -y --no-install-recommends \
+RUN sudo apt-get update \
+      && sudo apt-get install -y --no-install-recommends \
            build-essential checkinstall \
            nodejs \
            zip gdal-bin \ 
@@ -19,7 +20,7 @@ RUN apt-get update \
            curl \
            netcat \
            git \
-      && apt-get clean \
+      && sudo apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://github.com/CartoDB/CartoDB-SQL-API/archive/$SQL_VERSION.tar.gz | tar -v -C / -xz
