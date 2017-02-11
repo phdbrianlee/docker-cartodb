@@ -1,4 +1,4 @@
-FROM ubuntu:14.04  
+FROM ubuntu:12.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 # Version of CartoDB Editor
@@ -24,6 +24,8 @@ RUN add-apt-repository -y ppa:cartodb/nodejs-010
 RUN add-apt-repository -y ppa:cartodb/postgresql-$PG_MAJOR
 RUN add-apt-repository -y ppa:cartodb/gis
 
+# 
+# Failed to fetch http://ppa.launchpad.net/cartodb/postgresql-9.5/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found 
 RUN sudo apt-get update \
       && sudo apt-get install -y --no-install-recommends \
            autoconf binutils-doc bison build-essential flex \
