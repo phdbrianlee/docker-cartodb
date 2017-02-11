@@ -6,7 +6,7 @@
 # Wait for redis to be up
 while ! nc -z $REDIS_HOST $REDIS_PORT ; do sleep 3; done
 
-CONFIG_FILE=/usr/src/CartoDB-SQL-API-$SQL_VERSION/config/environments/$ENVIRONMENT.js
+CONFIG_FILE=/CartoDB-SQL-API-$SQL_VERSION/config/environments/$ENVIRONMENT.js
 
 # Default to listening on all interfaces so container links will work
 perl -0pi -e 's/(module.exports.node_host\s*=\s*[\x27\x60])[.\d\w]*/${1}'"${NODE_HOST:-0.0.0.0}"'/igs' $CONFIG_FILE
@@ -26,4 +26,4 @@ if [ ! -z "$DB_HOST" ]; then
     perl -0pi -e 's/(module.exports.db_host\s*=\s*[\x27\x60]?)[.\d\w]*/${1}'"$DB_HOST"'/igs' $CONFIG_FILE
 fi
 
-node /usr/src/CartoDB-SQL-API-$SQL_VERSION/app.js $ENVIRONMENT
+node /CartoDB-SQL-API-$SQL_VERSION/app.js $ENVIRONMENT
