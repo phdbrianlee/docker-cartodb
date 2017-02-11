@@ -12,8 +12,8 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends pytho
     && sudo apt-get install -y software-properties-common 
     
 RUN sudo add-apt-repository -y ppa:cartodb/nodejs-010
-RUN sudo add-apt-repository -y ppa:cartodb/cairo \
-    && sudo apt-get install libpango1.0-dev 
+# RUN sudo add-apt-repository -y ppa:cartodb/cairo \
+RUN sudo apt-get install libpango1.0-dev 
 
 # http://cartodb.readthedocs.io/en/latest/install.html#maps-api 
 
