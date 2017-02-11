@@ -22,13 +22,13 @@ RUN apt-get update \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://github.com/CartoDB/Windshaft-cartodb/archive/$WINDSHAFT_VERSION.tar.gz | tar -v -C /usr/src -xz
+RUN curl -sSL https://github.com/CartoDB/Windshaft-cartodb/archive/$WINDSHAFT_VERSION.tar.gz | tar -v -C / -xz
 
-RUN cd /usr/src/Windshaft-cartodb-$WINDSHAFT_VERSION && npm install
+RUN cd /Windshaft-cartodb-$WINDSHAFT_VERSION && npm install
 
-RUN mkdir /usr/src/Windshaft-cartodb-$WINDSHAFT_VERSION/logs
+RUN mkdir /Windshaft-cartodb-$WINDSHAFT_VERSION/logs
 
-RUN cd /usr/src/Windshaft-cartodb-$WINDSHAFT_VERSION/config/environments \
+RUN cd /Windshaft-cartodb-$WINDSHAFT_VERSION/config/environments \
       && cp $ENVIRONMENT.js.example $ENVIRONMENT.js
 
 COPY ./startup.sh /opt/startup.sh
