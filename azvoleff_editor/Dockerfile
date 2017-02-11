@@ -26,6 +26,7 @@ RUN add-apt-repository -y ppa:cartodb/gis
 
 # 
 # Failed to fetch http://ppa.launchpad.net/cartodb/postgresql-9.5/ubuntu/dists/trusty/main/binary-amd64/Packages 404 Not Found 
+# 12.04 - liblwgeom-2.1.8 : Depends: libgeos-c1 (>= 3.4.2) but it is not going to be installed
 RUN apt-get update \
       && apt-get install -y --no-install-recommends \
            autoconf binutils-doc bison build-essential flex \
