@@ -1,4 +1,4 @@
-FROM ubuntu:14.04 #12.04 
+FROM ubuntu:14.04  
 MAINTAINER Alex Zvoleff <azvoleff@conservation.org>
 
 sudo locale-gen en_US.UTF-8
